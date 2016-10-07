@@ -50,6 +50,7 @@ task usercontrol()
 		catVariables();
 
 		drive();
-		catapult();
+		adjustCatapult();
+		//catapult();
 	}
 }

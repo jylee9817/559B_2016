@@ -4,42 +4,38 @@ int shootFwd;
 int rightEncVal;
 int leftEncVal;
 int encValDiff;
+float encDiffRatio;
 
 // UPDATE CATAPULT VARIABLES
 void catVariables()
 {
-	shootFwd = vexRT[Btn5U];
-	cocksBack = vexRT[Btn6U];
+	shootFwd = vexRT[Btn6U];
+	cocksBack = vexRT[Btn5U];
 	rightEncVal = SensorValue[rightEncoder];
-	leftEncVal = SensorValue[leftEncoder];
-	encValDiff = abs((rightEncVal - leftEncVal));
+	leftEncVal = -(SensorValue[leftEncoder]);
+	encValDiff = abs(rightEncVal - leftEncVal); //deadzone
+	encDiffRatio = (1 + (encValDiff/360));
+}
+
+void updateRightCatMotors(int Speed)
+{
+	motor[top_right_cat] = Speed;
+	motor[bot_right_cat] = -Speed;
+}
+
+void updateLeftCatMotors(int Speed)
+{
+	motor[bot_left_cat] = -Speed;
+	motor[top_left_cat] = -Speed;
 }
 
 // This function is essentially a shortcut for our catapult code.
 // It sets the motors all to the same speed, so once the function
 // is used elsewhere, all motors move at the same directed speed.
-void updateCatMotors(int leftSpeed, int rightSpeed)
+void updateCatMotors(int Speed)
 {
-	motor[top_left_cat] = -leftSpeed;
-	motor[top_right_cat] = rightSpeed;
-	motor[bot_left_cat] = -leftSpeed;
-	motor[bot_right_cat] = -rightSpeed;
-}
-
-void adjustCatapult(int positive)
-{
-	if((encValDiff > 5) && (rightEncVal < leftEncVal))
-	{
-		updateCatMotors(positive*90,positive*100);
-	}
-	else if((encValDiff > 5) && (rightEncVal > leftEncVal))
-	{
-		updateCatMotors(positive*100,positive*90);
-	}
-	else
-	{
-		updateCatMotors(positive*100,positive*100);
-	}
+	updateRightCatMotors(Speed);
+	updateLeftCatMotors(Speed);
 }
 
 // This is the actual code for the catapult. It checks if a button
@@ -51,14 +47,35 @@ void catapult()
 {
 	if(cocksBack == 1)
 	{
-		adjustCatapult(-1);
+		updateCatMotors(-100);
 	}
 	else if(shootFwd == 1)
 	{
-		adjustCatapult(1);
+		updateCatMotors(100);
 	}
 	else
 	{
-		updateCatMotors(0,0);
+		updateCatMotors(0);
+	}
+}
+
+void adjustCatapult()
+{
+	if(encValDiff > 20)
+	{
+		if(rightEncVal < leftEncVal)
+		{
+			updateLeftCatMotors(100);
+			updateRightCatMotors(100*encDiffRatio);
+		}
+		else
+		{
+			updateLeftCatMotors(100*encDiffRatio);
+			updateRightCatMotors(100);
+		}
+	}
+	else
+	{
+		catapult();
 	}
 }
