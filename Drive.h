@@ -1,20 +1,25 @@
-// DRIVE VARIABLES
+//New Drive Variables
+int forward;
+int turn;
+int newStrafe;
+
 int driveY;
-int strafe;
 int driveX;
+int strafe;
+
 int DEADZONE = 15;
 
 // UPDATING DRIVE VARIABLES
 void driveVariables()
 {
 	driveY = vexRT[Ch3];
-	driveX = vexRT[Ch2];
+	driveX = vexRT[Ch1];
 	strafe = vexRT[Ch4];
 }
 
 // This function is essentially a shortcut for our drive code.
 // It sets the left and right motors to the left and right side
-// of the robot, respectively. By doing so, we ca
+// of the robot, respectively.
 void updateDriveMotors(int left, int right)
 {
 	motor[front_right_drive] = right;
@@ -23,25 +28,55 @@ void updateDriveMotors(int left, int right)
 	motor[back_right_drive] = right;
 }
 
-void drive()
+//new drive
+int setForward(int forVal)
 {
-	if(abs(driveY) > DEADZONE && abs(driveY) > abs(strafe))				// FWD REV
+	if(abs(forVal) > DEADZONE)
 	{
-		updateDriveMotors(driveY, driveY);
-	}
-	else if(abs(strafe) > DEADZONE && abs(strafe) > abs(driveY)) //STRAFING
-	{
-		motor[front_right_drive] = strafe;
-		motor[front_left_drive] = -strafe;
-		motor[back_left_drive] = strafe;
-		motor[back_right_drive] = -strafe;
-	}
-	else if(abs(driveX) > DEADZONE && abs(driveX) > abs(driveX)) //turn
-	{
-		updateDriveMotors(driveX, -driveX);
+		forward = forVal;
 	}
 	else
 	{
-		updateDriveMotors(0, 0);
+		forward = 0;
 	}
+	return forward;
+}
+
+int setTurn(int turnVal)
+{
+	if(abs(turnVal) > DEADZONE)
+	{
+		turn = turnVal;
+	}
+	else
+	{
+		turn = 0;
+	}
+	return turn;
+}
+
+int setStrafe(int strafeVal)
+{
+	if(abs(strafeVal) > DEADZONE)
+	{
+		newStrafe = strafeVal;
+	}
+	else
+	{
+		newStrafe = 0;
+	}
+	return newStrafe;
+}
+
+
+void newDrive(int forInput, int turnInput, int strafeInput)
+{
+	setForward(forInput);
+	setTurn(turnInput);
+	setStrafe(strafeInput);
+
+	motor[front_left_drive] = forward + newStrafe + turn;
+	motor[front_right_drive] = forward - newStrafe - turn;
+	motor[back_left_drive] = forward - newStrafe + turn;
+	motor[back_right_drive] = forward + newStrafe - turn;
 }

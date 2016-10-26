@@ -20,6 +20,7 @@
 #include "Vex_Competition_Includes.c"   // Main competition background code provided by ROBOTC for VEX Robotics.
 #include "Drive.h"											// Including the Drive file.
 #include "Catapult.h"										// Including the Catapult file.
+#include "Autonomous.h"
 
 
 void pre_auton()
@@ -35,7 +36,7 @@ void pre_auton()
 
 task autonomous()
 {
-	AutonomousCodePlaceholderForTesting();  // Remove this function call once you have "real" code.
+	auto1();
 }
 
 
@@ -49,8 +50,8 @@ task usercontrol()
 		driveVariables();
 		catVariables();
 
-		drive();
-		adjustCatapult();
-		//catapult();
+		//adjustCatapult();
+		catapult();
+		newDrive(driveY, driveX, strafe);
 	}
 }

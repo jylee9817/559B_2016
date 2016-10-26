@@ -5,6 +5,7 @@ int rightEncVal;
 int leftEncVal;
 int encValDiff;
 float encDiffRatio;
+float encAvg;
 
 // UPDATE CATAPULT VARIABLES
 void catVariables()
@@ -13,8 +14,9 @@ void catVariables()
 	cocksBack = vexRT[Btn5U];
 	rightEncVal = SensorValue[rightEncoder];
 	leftEncVal = -(SensorValue[leftEncoder]);
-	encValDiff = abs(rightEncVal - leftEncVal); //deadzone
-	encDiffRatio = (1 + (encValDiff/360));
+	encValDiff = rightEncVal - leftEncVal; //deadzone
+	encDiffRatio = (1 + abs(encValDiff/360));
+	encAvg = (encValDiff)/2;
 }
 
 void updateRightCatMotors(int Speed)
@@ -61,7 +63,7 @@ void catapult()
 
 void adjustCatapult()
 {
-	if(encValDiff > 20)
+	if(abs(encValDiff) > 30)
 	{
 		if(rightEncVal < leftEncVal)
 		{
@@ -72,6 +74,21 @@ void adjustCatapult()
 		{
 			updateLeftCatMotors(100*encDiffRatio);
 			updateRightCatMotors(100);
+		}
+	}
+	else
+	{
+		catapult();
+	}
+}
+
+void setEncPosition()
+{
+	if(cocksBack == 1 && shootFwd == 1)
+	{
+		while((encAvg%360) > 0)
+		{
+			updateCatMotors(100);
 		}
 	}
 	else
