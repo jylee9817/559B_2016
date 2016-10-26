@@ -42,8 +42,8 @@ task autonomous()
 
 task usercontrol()
 {
-	SensorValue[leftEncoder] = 0;
-	SensorValue[rightEncoder] = 0;
+	//SensorValue[leftEncoder] = 0;
+	//SensorValue[rightEncoder] = 0;
 
 	while (true)
 	{
