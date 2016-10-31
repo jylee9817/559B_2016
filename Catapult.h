@@ -1,22 +1,30 @@
 // CATAPULT VARIABLES
 int cocksBack;
 int shootFwd;
+int openClaw;
+int closeClaw;
+
+/*
 int rightEncVal;
 int leftEncVal;
 int encValDiff;
 float encDiffRatio;
 float encAvg;
+*/
 
 // UPDATE CATAPULT VARIABLES
 void catVariables()
 {
-	shootFwd = vexRT[Btn6U];
-	cocksBack = vexRT[Btn5U];
-	rightEncVal = SensorValue[rightEncoder];
-	leftEncVal = -(SensorValue[leftEncoder]);
-	encValDiff = rightEncVal - leftEncVal; //deadzone
-	encDiffRatio = (1 + abs(encValDiff/360));
-	encAvg = (encValDiff)/2;
+	shootFwd = vexRT[Btn6UXmtr2];
+	cocksBack = vexRT[Btn5UXmtr2];
+	openClaw = vexRT[Btn8RXmtr2];
+	closeClaw = vexRT[Btn8LXmtr2];
+
+	//rightEncVal = SensorValue[rightEncoder];
+	//leftEncVal = -(SensorValue[leftEncoder]);
+	//encValDiff = rightEncVal - leftEncVal; //deadzone
+	//encDiffRatio = (1 + abs(encValDiff/360));
+	//encAvg = (encValDiff)/2;
 }
 
 void updateRightCatMotors(int Speed)
@@ -28,7 +36,7 @@ void updateRightCatMotors(int Speed)
 void updateLeftCatMotors(int Speed)
 {
 	motor[bot_left_cat] = -Speed;
-	motor[top_left_cat] = -Speed;
+	motor[top_left_cat] = Speed;
 }
 
 // This function is essentially a shortcut for our catapult code.
@@ -38,6 +46,22 @@ void updateCatMotors(int Speed)
 {
 	updateRightCatMotors(Speed);
 	updateLeftCatMotors(Speed);
+}
+
+void moveClaw()
+{
+	if(openClaw)
+	{
+		motor[claw_motor] = 127;
+	}
+	else if(closeClaw)
+	{
+		motor[claw_motor] = -127;
+	}
+	else
+	{
+		motor[claw_motor] = 0;
+	}
 }
 
 // This is the actual code for the catapult. It checks if a button
@@ -61,6 +85,7 @@ void catapult()
 	}
 }
 
+/*
 void adjustCatapult()
 {
 	if(abs(encValDiff) > 30)
@@ -96,3 +121,4 @@ void setEncPosition()
 		catapult();
 	}
 }
+*/
