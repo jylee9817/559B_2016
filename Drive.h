@@ -12,7 +12,7 @@ int DEADZONE = 15;
 // UPDATING DRIVE VARIABLES
 void driveVariables()
 {
-	driveY = vexRT[Ch2];
+	driveY = vexRT[Ch3];
 	driveX = vexRT[Ch1];
 	strafe = vexRT[Ch4];
 }
