@@ -52,13 +52,13 @@ void moveClaw()
 {
 	if(openClaw)
 	{
-		motor[left_claw_motor] = 90;
-		motor[right_claw_motor] = 90;
+		motor[left_claw_motor] = 60;
+		motor[right_claw_motor] = 60;
 	}
 	else if(closeClaw)
 	{
-		motor[left_claw_motor] = -90;
-		motor[right_claw_motor] = -90;
+		motor[left_claw_motor] = -60;
+		motor[right_claw_motor] = -60;
 	}
 	else
 	{
@@ -76,11 +76,11 @@ void catapult()
 {
 	if(cocksBack == 1)
 	{
-		updateCatMotors(-100);
+		updateCatMotors(-60);
 	}
 	else if(shootFwd == 1)
 	{
-		updateCatMotors(100);
+		updateCatMotors(60);
 	}
 	else
 	{
