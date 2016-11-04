@@ -15,10 +15,10 @@ float encAvg;
 // UPDATE CATAPULT VARIABLES
 void catVariables()
 {
-	shootFwd = vexRT[Btn6UXmtr2];
-	cocksBack = vexRT[Btn5UXmtr2];
-	openClaw = vexRT[Btn8RXmtr2];
-	closeClaw = vexRT[Btn8LXmtr2];
+	shootFwd = vexRT[Btn6U];
+	cocksBack = vexRT[Btn5U];
+	openClaw = vexRT[Btn8R];
+	closeClaw = vexRT[Btn8L];
 
 	//rightEncVal = SensorValue[rightEncoder];
 	//leftEncVal = -(SensorValue[leftEncoder]);
@@ -52,11 +52,11 @@ void moveClaw()
 {
 	if(openClaw)
 	{
-		motor[claw_motor] = 127;
+		motor[claw_motor] = 90;
 	}
 	else if(closeClaw)
 	{
-		motor[claw_motor] = -127;
+		motor[claw_motor] = -90;
 	}
 	else
 	{
