@@ -52,15 +52,18 @@ void moveClaw()
 {
 	if(openClaw)
 	{
-		motor[claw_motor] = 90;
+		motor[left_claw_motor] = 90;
+		motor[right_claw_motor] = 90;
 	}
 	else if(closeClaw)
 	{
-		motor[claw_motor] = -90;
+		motor[left_claw_motor] = -90;
+		motor[right_claw_motor] = -90;
 	}
 	else
 	{
-		motor[claw_motor] = 0;
+		motor[left_claw_motor] = 0;
+		motor[right_claw_motor] = 0;
 	}
 }
 
