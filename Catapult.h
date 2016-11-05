@@ -15,10 +15,10 @@ float encAvg;
 // UPDATE CATAPULT VARIABLES
 void catVariables()
 {
-	shootFwd = vexRT[Btn6U];
-	cocksBack = vexRT[Btn5U];
-	openClaw = vexRT[Btn8R];
-	closeClaw = vexRT[Btn8L];
+	shootFwd = vexRT[Btn5U];
+	cocksBack = vexRT[Btn5D];
+	openClaw = vexRT[Btn6D];
+	closeClaw = vexRT[Btn6U];
 
 	//rightEncVal = SensorValue[rightEncoder];
 	//leftEncVal = -(SensorValue[leftEncoder]);
